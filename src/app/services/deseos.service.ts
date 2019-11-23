@@ -1,18 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Lista } from '../models/lista.model';
+import { List } from '../models/lista.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeseosService {
 
-  listas: Lista [] = [];
+  lists: List [] = [];
 
   constructor() {
-    const item1 = new Lista("Item1");
-    const item2 = new Lista("Item2");
+    this.loadStorage();
+  }
 
-    this.listas.push(item1, item2);
+  createList(title: string) {
+    const newItem = new List(title);
+    this.lists.push(newItem);
+    this.saveStorage();
+
+    return newItem.id;
+  }
+
+  deleteList( list: List ) {
+    this.lists = this.lists.filter( dataList => dataList.id !== list.id );
+    this.saveStorage();
+  }
+
+  getLists(id: string | number) {
+    id = Number(id);
+
+    return this.lists.find(listData => listData.id === id );
+  }
+
+  saveStorage() {
+    localStorage.setItem('data', JSON.stringify(this.lists));
+  }
+
+  loadStorage() {
+    if (localStorage.getItem('data')) {
+      this.lists = JSON.parse(localStorage.getItem('data'));
+    } else {
+      this.lists = [];
+    }
   }
 
 }

@@ -1,13 +1,13 @@
-import { listaItem } from './lista-item.model';
+import { listItem } from './lista-item.model';
 
-export class Lista {
+export class List {
 
     id: number;
     titulo: string;
     creadaEn: Date;
     terminadaEnd: Date;
     terminada: boolean;
-    items: listaItem[];
+    items: listItem[];
 
     constructor(titulo: string) {
         this.titulo = titulo;
